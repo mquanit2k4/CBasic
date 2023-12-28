@@ -35,6 +35,7 @@ void sortD(Dictionary dic[], int n)
 
 int findWord(Dictionary dic[], int n, char x[])
 {
+	sortD(dic,n);
 	int lo = 0, hi = n-1;
 	while(lo <= hi)
 	{
@@ -83,7 +84,8 @@ int main()
     	while (getchar() != '\n');
     	if (choice == 1)
     	{
-    		for (int j = n-1 ; j > 0 ; j--)
+    		sortD(dic,n);
+    		for (int j = n-1 ; j >= 0 ; j--)
 		    	printf("%s\t%s\n", dic[j].anh , dic[j].viet);
 		}
 		else if (choice == 2)
@@ -107,26 +109,53 @@ int main()
 			printf("Vui long nhap cau can dich: ");
 			fgets(cau, sizeof(cau), stdin);
 			toLowerCase(cau);
+			char tempCau[1001];
+			char ketqua[1001];
+    		strcpy(tempCau, cau);	 // luu lai du lieu cua "cau"
+    		strcpy(ketqua, cau);
 			char *token = strtok(cau, " \t\n");
 			while (token != NULL) {
         		printf("%s\n", token);
         		token = strtok(NULL, " \t\n");
    			}
    			
-   			char *check = strtok(cau, " \t\n");
+   			char *check = strtok(tempCau, " \t\n");
    			while (check != NULL) {
 		        int tmp = findWord(dic, n, check);
 		        if (tmp == -1) {
-		            char newWord[21];
 		            printf("Thieu tu %s, vui long bo sung!\n", check);
 		            n++;
 		            // Nhập từ mới từ bàn phím
-		            printf("Nhap dich cho tu %s: ", check);
+		            printf("Nhap nghia cua tu %s: ", check);
 		            scanf("%s\t%[^\n]", dic[n-1].anh, dic[n-1].viet);
 		        }
 		        check = strtok(NULL, " \t\n");
     		}
+    		
+    		char *res = strtok(ketqua, " \t\n");
+    		while (res != NULL)
+    		{
+    			int ans = findWord(dic,n, res);
+    			printf("%s ", dic[ans].viet);
+    			res = strtok(NULL, " \t\n");
+			}
+			printf("\n");
 			   
+		}
+		else if (choice == 4)
+		{
+			FILE *f3 = fopen("C:\\Users\\admin\\Desktop\\C Basic\\data.txt", "w");
+			if (f3 == NULL)
+			{
+				printf("Error opening file!\n");
+				return 1;
+			}
+			for (int t = 0; t < n ; t++)	
+			{
+				fprintf(f3, "%s\t%s\n", dic[t].anh , dic[t].viet);
+			}
+			fclose(f3);
+			printf("Da ghi lai du lieu vao file data.txt\n");
 		}
 		else if (choice == 5)
 		{
