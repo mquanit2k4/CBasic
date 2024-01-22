@@ -96,7 +96,7 @@ void preOrder(Node r)
 	FILE *f4 = fopen("C:\\Users\\admin\\Desktop\\C Basic\\booking_orders.txt", "w");
 	if (r == NULL)
 		return;
-	fscanf(f4, "%s %d %d %s %s %d\n", r->id.requireID , &r->id.numOfPeople, &r->id.roomID , r->id.hotelID, r->id.date, &r->id.numOfChild);
+	fprintf(f4, "%s %d %d %s %s %d\n", r->id.requireID , r->id.numOfPeople, r->id.roomID , r->id.hotelID, r->id.date, r->id.numOfChild);
 	preOrder(r->leftChild);
 	preOrder(r->rightChild);
 }
